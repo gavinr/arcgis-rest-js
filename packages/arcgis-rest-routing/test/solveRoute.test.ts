@@ -265,30 +265,4 @@ describe("solveRoute", () => {
         fail(e);
       });
   });
-
-  // it("should make a simple, single routing request", done => {
-  //   fetchMock.once("*", Solve);
-
-  //   solveRoute({
-  //     stops: [
-  //       [-117.195677,34.056383],
-  //       [-117.918976,33.812092]
-  //     ],
-  //     authentication
-  //   })
-  //     .then(response => {
-  //       expect(fetchMock.called()).toEqual(true);
-  //       const [url, options]: [string, RequestInit] = fetchMock.lastCall("*");
-  //       expect(url).toEqual(
-  //         "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve"
-  //       );
-  //       expect(options.method).toBe("POST");
-  //       expect(options.body).toContain("f=json");
-  //       expect(options.body).toContain("stops=-117.195677,34.056383;-117.918976,33.812092");
-  //       done();
-  //     })
-  //     .catch(e => {
-  //       fail(e);
-  //     });
-  // });
 });
