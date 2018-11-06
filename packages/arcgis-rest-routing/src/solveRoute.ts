@@ -35,7 +35,7 @@ export interface ISolveRouteResponse {
     routeId: number;
     routeName: string;
     summary: object;
-    featres: IFeature[];
+    features: IFeature[];
   }>;
 }
 
@@ -55,7 +55,32 @@ function isLocation(
 }
 
 /**
- * todo - doc
+ * Used to find the best way to get from one location to another or to visit several locations. See the [REST Documentation](https://developers.arcgis.com/rest/network/api-reference/route-synchronous-service.htm) for more information.
+ *
+ * ```js
+ *   import { solveRoute } from '@esri/arcgis-rest-routing';
+ *   import { ApplicationSession } from '@esri/arcgis-rest-auth';
+ *
+ *   solveRoute({
+ *      stops: [
+ *        {
+ *          latitude: 34.056383,
+ *          longitude: -117.195677
+ *        },
+ *        {
+ *          latitude: 33.812092,
+ *          longitude: -117.918976
+ *        }
+ *      ],
+ *      authentication: session
+ *   })
+ *   .then((response) => {
+ *     response.routes.features; // => {routes: {features: [{attributes: { ... }, geometry:{ ... }}]}}
+ *   });
+ * ```
+ *
+ * @param address String representing the address or point of interest or RequestOptions to pass to the endpoint.
+ * @returns A Promise that will resolve with routes and directions for the request.
  */
 export function solveRoute(
   requestOptions: ISolveRouteRequestOptions
@@ -66,7 +91,7 @@ export function solveRoute(
     ...requestOptions
   };
 
-  // the SAS service doesnt support anonymous requests
+  // the SAAS service does not support anonymous requests
   if (
     !requestOptions.authentication &&
     options.endpoint === worldRoutingService
