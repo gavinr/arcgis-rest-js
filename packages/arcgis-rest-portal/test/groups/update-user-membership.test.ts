@@ -23,7 +23,7 @@ describe("udpate-user-membership", () => {
 
   afterEach(fetchMock.restore);
 
-  it("converts member to admin", done => {
+  it("converts member to admin", () => {
     fetchMock.post(
       "https://myorg.maps.arcgis.com/sharing/rest/community/groups/3ef/updateUsers",
       { results: [{ username: "casey", success: true }] }
@@ -38,10 +38,9 @@ describe("udpate-user-membership", () => {
         "https://myorg.maps.arcgis.com/sharing/rest/community/groups/3ef/updateUsers"
       );
       expect(opts.body).toContain("admins=larry%2Ccurly%2Cmoe");
-      done();
     });
   });
-  it("converts admin to member", done => {
+  it("converts admin to member", () => {
     fetchMock.post(
       "https://myorg.maps.arcgis.com/sharing/rest/community/groups/3ef/updateUsers",
       { results: [{ username: "casey", success: true }] }
@@ -56,7 +55,6 @@ describe("udpate-user-membership", () => {
         "https://myorg.maps.arcgis.com/sharing/rest/community/groups/3ef/updateUsers"
       );
       expect(opts.body).toContain("users=larry%2Ccurly%2Cmoe");
-      done();
     });
   });
 });

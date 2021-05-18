@@ -24,7 +24,7 @@ describe("sharing helpers ::", () => {
       })
         .then(result => {
           expect(fetchMock.done()).toBeTruthy();
-          expect(result).toBe("none", "should return none");
+          expect(result).withContext("should return none").toBe("none");
           done();
         })
         .catch(e => {
@@ -44,7 +44,7 @@ describe("sharing helpers ::", () => {
       })
         .then(result => {
           expect(fetchMock.done()).toBeTruthy();
-          expect(result).toBe("owner", "should return owner");
+          expect(result).withContext("should return owner").toBe("owner");
           done();
         })
         .catch(e => {

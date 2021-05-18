@@ -432,7 +432,7 @@ describe("get", () => {
               "https://myorg.maps.arcgis.com/sharing/rest/content/items/3ef/resources/resource.json"
             );
             expect(options.method).toBe("POST");
-            expect(resource.foo).toEqual('foobarbaz', 'removed control chars');
+            expect(resource.foo).withContext('removed control chars').toEqual('foobarbaz');
             done();
           })
           .catch(e => {
@@ -452,11 +452,11 @@ describe("get", () => {
               "https://myorg.maps.arcgis.com/sharing/rest/content/items/3ef/resources/resource.json"
             );
             expect(options.method).toBe("POST");
-            expect(response.json).toBeDefined('got a raw response');
+            expect(response.json).toBeDefined();
             response.json()
               .then(() => fail('parsing should fail because control characters still present'))
               .catch((err: Error) => {
-                expect(err).toBeDefined('JSON parse fails');
+                expect(err).toBeDefined();
                 done();
               });
           })

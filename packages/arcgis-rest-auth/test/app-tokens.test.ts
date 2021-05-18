@@ -65,9 +65,8 @@ describe("app-token functions: ", () => {
           expect(headers["X-Esri-Auth-Redirect-Uri"]).toBe(
             "https://hub.arcgis.com/torii-provider-arcgis/redirect.html"
           );
-          expect(options.credentials).toBe(
-            "include",
-            "fetch should send cookie"
+          expect(options.credentials).withContext("fetch should send cookie").toBe(
+            "include"
           );
           expect(headers["X-Esri-Auth-Client-Id"]).toBe("CLIENT-ID-ABC123");
           expect(response.token).toEqual("APP-TOKEN");

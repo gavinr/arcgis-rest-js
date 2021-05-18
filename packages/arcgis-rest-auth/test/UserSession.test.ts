@@ -1192,9 +1192,8 @@ describe("UserSession", () => {
       const removeSpy = spyOn(MockWindow, "removeEventListener");
       const session = UserSession.fromCredential(cred);
       session.disablePostMessageAuth(MockWindow);
-      expect(removeSpy.calls.count()).toBe(
-        1,
-        "should call removeEventListener"
+      expect(removeSpy.calls.count()).withContext("should call removeEventListener").toBe(
+        1
       );
     });
     it(".enablePostMessageAuth adds event listener", () => {
@@ -1204,7 +1203,7 @@ describe("UserSession", () => {
         ["https://storymaps.arcgis.com"],
         MockWindow
       );
-      expect(addSpy.calls.count()).toBe(1, "should call addEventListener");
+      expect(addSpy.calls.count()).withContext("should call addEventListener").toBe(1);
     });
 
     it(".enablePostMessage handler returns credential to origin in list", () => {
@@ -1241,29 +1240,22 @@ describe("UserSession", () => {
       // from an embedded iframe
       Win._fn(event);
       // Expectations...
-      expect(sourceSpy.calls.count()).toBe(
-        1,
-        "souce.postMessage should be called in handler"
-      );
+      expect(sourceSpy.calls.count()).withContext("souce.postMessage should be called in handler").toBe(1);
       const args = sourceSpy.calls.argsFor(0);
-      expect(args[0].type).toBe(
-        "arcgis:auth:credential",
-        "should send credential type"
+      expect(args[0].type).withContext("should send credential type").toBe(
+        "arcgis:auth:credential"
       );
-      expect(args[0].credential.userId).toBe(
-        "jsmith",
-        "should send credential"
+      expect(args[0].credential.userId).withContext("should send credential").toBe(
+        "jsmith"
       );
-      expect(args[0].credential.server).toBe(
-        "https://www.arcgis.com",
-        "sends server url without /sharing/rest"
+      expect(args[0].credential.server).withContext("sends server url without /sharing/rest").toBe(
+        "https://www.arcgis.com"
       );
       // now the case where it's not a valid origin
       event.origin = "https://evil.com";
       Win._fn(event);
-      expect(sourceSpy.calls.count()).toBe(
-        1,
-        "souce.postMessage should not be called in handler for invalid origin"
+      expect(sourceSpy.calls.count()).withContext("souce.postMessage should not be called in handler for invalid origin").toBe(
+        1
       );
     });
 
@@ -1288,9 +1280,8 @@ describe("UserSession", () => {
 
       return UserSession.fromParent("https://origin.com", Win).then(
         (session) => {
-          expect(session.username).toBe(
-            "jsmith",
-            "should use the cred wired throu the mock window"
+          expect(session.username).withContext("should use the cred wired through the mock window").toBe(
+            "jsmith"
           );
         }
       );
@@ -1323,9 +1314,8 @@ describe("UserSession", () => {
       };
 
       return UserSession.fromParent("https://origin.com", Win).then((resp) => {
-        expect(resp.username).toBe(
-          "jsmith",
-          "should use the cred wired throu the mock window"
+        expect(resp.username).withContext("should use the cred wired throuh the mock window").toBe(
+          "jsmith"
         );
       });
     });
@@ -1353,7 +1343,7 @@ describe("UserSession", () => {
       };
 
       return UserSession.fromParent("https://origin.com", Win).catch((err) => {
-        expect(err).toBeDefined("Should reject");
+        expect(err).toBeDefined();
       });
     });
 
@@ -1380,7 +1370,7 @@ describe("UserSession", () => {
       };
 
       return UserSession.fromParent("https://origin.com", Win).catch((err) => {
-        expect(err).toBeDefined("Should reject");
+        expect(err).toBeDefined();
       });
     });
 
@@ -1404,7 +1394,7 @@ describe("UserSession", () => {
       };
 
       return UserSession.fromParent("https://origin.com", Win).catch((err) => {
-        expect(err.message).toBe("Unknown message type.", "Should reject");
+        expect(err.message).toBe("Unknown message type.");
       });
     });
   });

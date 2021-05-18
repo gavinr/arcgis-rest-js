@@ -100,9 +100,7 @@ describe("unshareItemWithGroup() ::", () => {
         done();
       })
       .catch(e => {
-        expect(fetchMock.done()).toBeTruthy(
-          "All fetchMocks should have been called"
-        );
+        expect(fetchMock.done()).toBeTruthy();
         fail(e);
       });
   });

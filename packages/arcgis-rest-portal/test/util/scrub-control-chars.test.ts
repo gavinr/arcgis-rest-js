@@ -17,6 +17,6 @@ describe('scrubControlChars', function () {
     // ISO 8859 special char
     hasAllControlChars += String.fromCharCode(160);
 
-    expect(scrubControlChars(hasAllControlChars)).toBe('foobarbaz', "removes all control chars")
+    expect(scrubControlChars(hasAllControlChars)).withContext("removes all control chars").toBe('foobarbaz')
   });
 });
