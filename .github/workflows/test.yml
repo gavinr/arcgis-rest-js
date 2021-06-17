@@ -40,4 +40,4 @@ jobs:
         run: npm run test:firefox:ci
 
       - name: Code Coverage
-        run: codecov
+        run: ./node_modules/.bin/codecov
