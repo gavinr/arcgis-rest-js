@@ -106,7 +106,6 @@ function _generateRequestOptions(users: string[], baseOptions: IInviteGroupUsers
  * @private 
  */
 function _sendSafeRequest(url: string,requestOptions: IRequestOptions): Promise<IInviteGroupUsersResult> {
-  console.log('_sendSafeRequest', url);
   return request(url, requestOptions)
     .catch(error => ({ errors: [error] }));
 }
