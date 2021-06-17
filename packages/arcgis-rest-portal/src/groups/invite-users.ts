@@ -73,7 +73,6 @@ export function inviteGroupUsers(options: IInviteGroupUsersOptions): Promise<IIn
   const id = options.id;
   const url = `${getPortalUrl(options)}/community/groups/${id}/invite`;
   const batches = _generateBatchRequests(options);
-  console.log('batches:', batches);
   const promises = batches.map(batch => _sendSafeRequest(url, batch));
 
   return Promise.all(promises).then(_combineResults);
