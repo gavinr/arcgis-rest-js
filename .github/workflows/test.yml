@@ -39,5 +39,7 @@ jobs:
       - name: Test in Firefox
         run: npm run test:firefox:ci
 
-      - name: Code Coverage
-        run: ./node_modules/.bin/codecov
+      - uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
