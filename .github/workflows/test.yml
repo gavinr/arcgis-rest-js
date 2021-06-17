@@ -6,6 +6,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
       # https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows
       - name: Cache node modules
@@ -24,8 +27,17 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Test
-        run: npm run test:ci
+      - name: Lint
+        run: npm run lint
+
+      - name: Test in Node
+        run: npm run test:node
+
+      - name: Test in Chrome
+        run: npm run test:chrome:ci
+
+      - name: Test in Firefox
+        run: npm run test:firefox:ci
 
       - name: Code Coverage
         run: codecov
