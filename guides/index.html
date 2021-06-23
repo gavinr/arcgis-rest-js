@@ -8,7 +8,7 @@
     
     <meta name="description" content="A modular, high quality toolkit for working with the ArcGIS REST API.">
     
-    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-rc.7/css/calcite-web.min.css">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css">
     <link rel="stylesheet" href="/arcgis-rest-js/css/style.css">
     
   </head>
@@ -18,8 +18,9 @@
       <nav class="drawer-nav" role="navigation">
         <aside class="side-nav">
           <h2 class="side-nav-title">ArcGIS REST JS</h2>
-          <a href="/arcgis-rest-js/guides/" class="side-nav-link">Guides</a>
+          <a href="/arcgis-rest-js/guides/" class="is-active side-nav-link">Guides</a>
           <a href="/arcgis-rest-js/api/" class="side-nav-link">API Reference</a>
+          <a href="https://github.com/Esri/arcgis-rest-js" class="side-nav-link">GitHub</a>
         </aside>
       </nav>
     </div>
@@ -35,8 +36,9 @@
               <a href="/arcgis-rest-js/" class="top-nav-title">ArcGIS REST JS</a>
               <!-- primary navigation sections -->
               <nav class="top-nav-list" role="navigation" aria-labelledby="topnav">
-                <a href="/arcgis-rest-js/guides/" class="top-nav-link">Guides</a>
+                <a href="/arcgis-rest-js/guides/" class="is-active top-nav-link">Guides</a>
                 <a href="/arcgis-rest-js/api/" class="top-nav-link">API Reference</a>
+                <a href="https://github.com/Esri/arcgis-rest-js" class="top-nav-link">GitHub</a>
               </nav>
             </div>
 
@@ -75,17 +77,13 @@
             
               <li><a href="/arcgis-rest-js/guides/from-a-cdn/">From a CDN</a></li>
             
-              <li><a href="/arcgis-rest-js/guides/babel-and-webpack/">Babel + WebPack</a></li>
-            
-              <li><a href="/arcgis-rest-js/guides/typescript-and-webpack/">TypeScript + WebPack</a></li>
+              <li><a href="/arcgis-rest-js/guides/bundlers/">Bundlers</a></li>
             
               <li><a href="/arcgis-rest-js/guides/amd-requirejs-dojo/">AMD (Require.js or Dojo)</a></li>
             
               <li><a href="/arcgis-rest-js/guides/node/">Node.js</a></li>
             
-              <li><a href="/arcgis-rest-js/guides/babel-and-rollup/">Babel + Rollup</a></li>
-            
-              <li><a href="/arcgis-rest-js/guides/browserify/">Browserify</a></li>
+              <li><a href="/arcgis-rest-js/guides/whats-new-v2-0/">What's New in v2.0.0</a></li>
             
           </ul>
         
@@ -100,6 +98,8 @@
             
               <li><a href="/arcgis-rest-js/guides/cli-authentication/">Authentication for CLI Apps</a></li>
             
+              <li><a href="/arcgis-rest-js/guides/embedded-apps/">Embedded Authentication</a></li>
+            
           </ul>
         
       </ul>
@@ -111,12 +111,10 @@
 <p>ArcGIS REST JS can be deployed with a variety of build tools, including:</p>
 <ul>
 <li><a href="./from-a-cdn/">From a CDN</a></li>
-<li><a href="./babel-and-webpack/">Babel + Webpack</a></li>
-<li><a href="./typescript-and-webpack/">TypeScript + Webpack</a> (Coming soon)</li>
-<li><a href="amd-requirejs-dojo/">AMD (Require.js or Dojo)</a> (Coming soon)</li>
+<li><a href="./bundlers/">webpack, Rollup and Parcel</a></li>
+<li><a href="./amd-requirejs-dojo/">AMD (Require.js or Dojo)</a></li>
 <li><a href="./node/">Node.js</a></li>
-<li><a href="./babel-and-rollup/">Babel + Rollup</a></li>
-<li><a href="./browserify/">Browserify</a> (Coming soon)</li>
+<li><a href="./whats-new-v2-0/">What's New in <code>v2.0.0</code>?</a></li>
 </ul>
 <h2>Requirements</h2>
 <p>ArcGIS REST JS takes advantage of web standards that are supported in all modern desktop browsers and most mobile browsers.</p>
@@ -139,15 +137,24 @@
 <p>IE11 and older mobile browsers require polyfills.</p>
 <ul>
 <li><a href="https://github.com/stefanpenner/es6-promise"><code>Promise</code> polyfill</a></li>
-<li><a href="https://github.com/matthew-andrews/isomorphic-fetch"><code>Fetch</code> polyfill</a></li>
+<li><a href="https://github.com/bitinn/node-fetch"><code>Fetch</code> polyfill</a></li>
 </ul>
 <h2>Node.js Support</h2>
-<p>ArcGIS REST JS is supported in Node.js 6.x and 8.x. It requires additional packages to polyfill <code>Fetch</code> and <code>FormData</code>.</p>
+<p>ArcGIS REST JS is supported in Node.js 8.x and above. It requires additional packages to polyfill <code>Fetch</code> and <code>FormData</code>.</p>
 <p>We recommend the ones below:</p>
 <ul>
-<li><a href="https://www.npmjs.com/package/isomorphic-fetch"><code>isomorphic-fetch</code></a> - to polyfill <code>Fetch</code></li>
+<li><a href="https://github.com/bitinn/node-fetch"><code>node-fetch</code></a> - to polyfill <code>Fetch</code></li>
 <li><a href="https://github.com/form-data/isomorphic-form-data"><code>isomorphic-form-data</code></a> - to polyfill <code>FormData</code></li>
 </ul>
+<pre><code class="js"><span class="hljs-keyword">const</span> fetch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node-fetch'</span>);
+<span class="hljs-keyword">const</span> { setDefaultRequestOptions, request } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@esri/arcgis-rest-request'</span>);
+
+<span class="hljs-comment">// use node-fetch for each request instead of relying on a global</span>
+setDefaultRequestOptions({ fetch })
+
+request(url)
+  .then(response)
+</code></pre>
 <p>Other versions of Node.js may also work with appropriate polyfills but we cannot guarantee support.</p>
       </div>
     </div>
@@ -156,16 +163,18 @@
       </main>
     </div>
 
-    <footer class="footer leader-1">
+    <footer class="footer">
       
-      <div class="grid-container">
-        <div class="column-24 trailer-half">
-          <a href="https://github.com/Esri/arcgis-rest-js" class="font-size--1">Fork this project on GitHub</a>
+      <div class="panel panel-white">
+        <div class="grid-container">
+          <div class="column-24">
+            <a href="https://github.com/Esri/arcgis-rest-js" class="font-size--2">Fork this project</a>
+          </div>
         </div>
       </div>
     </footer>
 
-    <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-rc.7/js/calcite-web.min.js"></script>
+    <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/js/calcite-web.min.js"></script>
 
     <script>
        calcite.init()
